@@ -69,7 +69,8 @@ public class PersonApiController {
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
                                              @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
+                                             @RequestParam("dob") String dobString,
+                                             @RequestParam("score") int score) {
         Date dob;
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
@@ -78,7 +79,7 @@ public class PersonApiController {
             return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
         // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+        Person person = new Person(email, password, name, dob, score);
         repository.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }

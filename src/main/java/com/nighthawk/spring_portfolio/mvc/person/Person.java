@@ -73,6 +73,8 @@ public class Person {
     @ManyToMany(fetch = EAGER)
     private Collection<PersonRole> roles = new ArrayList<>();
 
+    private int score;
+
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
         "2022-11-13": {
@@ -87,11 +89,12 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob) {
+    public Person(String email, String password, String name, Date dob, int score) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.score = score;
     }
 
     // A custom getter to return age from dob attribute
