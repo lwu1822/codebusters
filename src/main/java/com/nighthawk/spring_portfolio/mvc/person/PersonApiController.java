@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 @RestController
 @RequestMapping("/api/person")
 public class PersonApiController {
@@ -69,6 +71,7 @@ public class PersonApiController {
                                              @RequestParam("name") String name,
                                              @RequestParam("dob") String dobString) {
         Date dob;
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
         try {
             dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
         } catch (Exception e) {
