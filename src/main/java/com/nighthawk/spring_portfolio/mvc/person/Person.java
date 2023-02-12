@@ -106,6 +106,7 @@ public class Person {
     }
 
     // Initialize static test data 
+    // IMPORTANT: data here put in db (see ModelInit.java)
     public static Person[] init() {
 
         // basics of class construction
@@ -160,6 +161,7 @@ public class Person {
             p5.setDob(d);
         } catch (Exception e) {
         }
+
 
         // Array definition and data initialization
         Person persons[] = {p1, p2, p3, p4, p5};

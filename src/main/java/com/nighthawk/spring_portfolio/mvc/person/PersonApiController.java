@@ -25,6 +25,9 @@ public class PersonApiController {
     @Autowired
     private PersonJpaRepository repository;
 
+    @Autowired
+    private PersonRoleJpaRepository roleRepository; 
+
     /*
     GET List of People
      */
@@ -81,6 +84,8 @@ public class PersonApiController {
         // A person object WITHOUT ID will create a new record with default roles as student
         Person person = new Person(email, password, name, dob, score);
         repository.save(person);
+        PersonRole personRole = new PersonRole(name, "user");
+        roleRepository.save(personRole); 
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
 

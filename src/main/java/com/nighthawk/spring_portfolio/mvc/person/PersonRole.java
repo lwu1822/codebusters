@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
+// 2nd + 3rd anotation: mk constructor w/ no args + arg
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,12 @@ public class PersonRole {
 
     @Column(unique=true)
     private String name;
+
+    @NotEmpty
+    private String role;
+
+    public PersonRole(String name, String role) {
+        this.name = name; 
+        this.role = role; 
+    }
 }
