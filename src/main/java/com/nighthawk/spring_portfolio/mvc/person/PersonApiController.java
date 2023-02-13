@@ -93,6 +93,7 @@ public class PersonApiController {
     }
     */
 
+    //this is the new endpoint for creating a user (uses many to many to connect to roles)
     @PostMapping( "/post")
     public Person postPerson(@RequestBody Person person) {
         //encrypt password

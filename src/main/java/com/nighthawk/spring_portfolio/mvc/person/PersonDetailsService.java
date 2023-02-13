@@ -38,7 +38,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         //CHANGE
         person.getPersonrole().forEach(role -> { //loop through roles
-            authorities.add(new SimpleGrantedAuthority(role.getName())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
+            authorities.add(new SimpleGrantedAuthority(role.getEmail())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
         });
         //debugging 
         //CHANGE
@@ -96,7 +96,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             }
             //CHANGE (getRoles)
             if (person.getPersonrole().isEmpty()) {
-                PersonRole role = personRoleJpaRepository.findByName(roleName);
+                PersonRole role = personRoleJpaRepository.findByEmail(roleName);
                 if (role != null) { // verify role
                     //CHANGE
                     person.getPersonrole().add(role);
@@ -109,7 +109,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     /* Roles Section */
 
     public void saveRole(PersonRole role) {
-        PersonRole roleObj = personRoleJpaRepository.findByName(role.getName());
+        PersonRole roleObj = personRoleJpaRepository.findByEmail(role.getEmail());
         if (roleObj == null) {  // only add if it is not found
             personRoleJpaRepository.save(role);
         }
@@ -120,18 +120,18 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
     }
 
     public PersonRole findRole(String roleName) {
-        return personRoleJpaRepository.findByName(roleName);
+        return personRoleJpaRepository.findByEmail(roleName);
     }
 
     public void addRoleToPerson(String email, String roleName) { // by passing in the two strings you are giving the user that certain role
         Person person = personJpaRepository.findByEmail(email);
         if (person != null) {   // verify person
-            PersonRole role = personRoleJpaRepository.findByName(roleName);
+            PersonRole role = personRoleJpaRepository.findByEmail(roleName);
             if (role != null) { // verify role
                 boolean addRole = true;
                 //CHANGE
                 for (PersonRole roleObj : person.getPersonrole()) {    // only add if user is missing role
-                    if (roleObj.getName().equals(roleName)) {
+                    if (roleObj.getEmail().equals(roleName)) {
                         addRole = false;
                         break;
                     }

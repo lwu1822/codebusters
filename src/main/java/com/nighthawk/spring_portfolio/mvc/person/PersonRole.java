@@ -25,8 +25,10 @@ public class PersonRole {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    //change name to email because email is a unique identifier 
+
     @Column(unique=true)
-    private String name;
+    private String email;
 
     @NotEmpty
     private String role;
@@ -35,8 +37,8 @@ public class PersonRole {
     private Set<Person> person; 
 
 
-    public PersonRole(String name, String role) {
-        this.name = name; 
+    public PersonRole(String email, String role) {
+        this.email = email; 
         this.role = role; 
     }
 }
