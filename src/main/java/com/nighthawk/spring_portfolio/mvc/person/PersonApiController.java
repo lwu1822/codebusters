@@ -69,12 +69,28 @@ public class PersonApiController {
     @GetMapping("/{id}")
     public ResponseEntity<Person> getPerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
+        System.out.println(optional);
         if (optional.isPresent()) {  // Good ID
-            Person person = optional.get();  // value from findByID
+             //refer to comments above to see why code was changed
+            
+            //find all the attributes of Person object
+            String email = optional.get().getEmail(); 
+            String password = optional.get().getPassword(); 
+            String name = optional.get().getName(); 
+            Date dob = optional.get().getDob(); 
+
+            //make a new person object with the attributes found above
+            Person person = new Person(id, email, password, name, dob); 
+
+            //add the person object into the usersList
+            //this doesn't work for some reason
+            //Person person = optional.get();  // value from findByID
+            
             return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
         }
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);       
+        
     }
 
     /*
