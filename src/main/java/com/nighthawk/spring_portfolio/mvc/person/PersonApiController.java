@@ -68,6 +68,8 @@ public class PersonApiController {
     /*
     POST Aa record by Requesting Parameters from URI
      */
+
+    //CHANGED TO USING TEXT (JSON) TO CREATE A USER SO THAT THE PERSON'S ROLE CAN ALSO BE AN INPUT
     /* 
     @PostMapping( "/post")
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
@@ -93,7 +95,12 @@ public class PersonApiController {
 
     @PostMapping( "/post")
     public Person postPerson(@RequestBody Person person) {
-        return repository.save(person); 
+        //encrypt password
+        String password = person.getPassword(); 
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        //create a person object to save in the database (along with many to many mapping to roles)
+        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonrole(), null);
+        return repository.save(personReturn); 
     }
 
     /*
