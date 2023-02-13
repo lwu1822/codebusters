@@ -68,6 +68,7 @@ public class PersonApiController {
     /*
     POST Aa record by Requesting Parameters from URI
      */
+    /* 
     @PostMapping( "/post")
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
                                              @RequestParam("password") String password,
@@ -87,6 +88,12 @@ public class PersonApiController {
         PersonRole personRole = new PersonRole(name, "user");
         roleRepository.save(personRole); 
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
+    }
+    */
+
+    @PostMapping( "/post")
+    public Person postPerson(@RequestBody Person person) {
+        return repository.save(person); 
     }
 
     /*

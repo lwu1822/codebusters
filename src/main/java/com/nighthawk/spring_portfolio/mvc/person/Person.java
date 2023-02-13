@@ -9,12 +9,18 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import static javax.persistence.FetchType.EAGER;
 import javax.validation.constraints.Email;
@@ -29,8 +35,10 @@ import com.vladmihalcea.hibernate.type.json.JsonType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 
 /*
 Person is a POJO, Plain Old Java Object.
@@ -39,7 +47,11 @@ First set of annotations add functionality to POJO
 The last annotation connect to database
 --- @Entity
  */
-@Data
+
+//may need getter + setter instead of data
+//@Data
+@Getter 
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -70,10 +82,22 @@ public class Person {
     private Date dob;
 
     // To be implemented
-    @ManyToMany(fetch = EAGER)
-    private Collection<PersonRole> roles = new ArrayList<>();
+    //@ManyToMany(fetch = EAGER)
 
-    private int score;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "person_person_roles",
+        joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "person_role_id", referencedColumnName = "id")
+    )
+    private Set<PersonRole> personrole;
+
+    //maybe other way around?
+    /* 
+    private Collection<PersonRole> roles = new ArrayList<>();
+    */
+
+    //private int score;
 
     /* HashMap is used to store JSON for daily "stats"
     "stats": {
@@ -89,12 +113,12 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob, int score) {
+    public Person(String email, String password, String name, Date dob) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
-        this.score = score;
+        //this.score = score;
     }
 
     // A custom getter to return age from dob attribute

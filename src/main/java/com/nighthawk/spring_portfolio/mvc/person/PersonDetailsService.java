@@ -36,10 +36,13 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
 			throw new UsernameNotFoundException("User not found with username: " + email);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        person.getRoles().forEach(role -> { //loop through roles
+        //CHANGE
+        person.getPersonrole().forEach(role -> { //loop through roles
             authorities.add(new SimpleGrantedAuthority(role.getName())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
         });
-        System.out.println(person.getRoles());
+        //debugging 
+        //CHANGE
+        System.out.println("roles: " + person.getPersonrole());
         // train spring security to User and Authorities
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), authorities);
     }
@@ -91,10 +94,12 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             if (person.getPassword() == null || person.getPassword().isEmpty() || person.getPassword().isBlank()) {
                 person.setPassword(passwordEncoder.encode(password));
             }
-            if (person.getRoles().isEmpty()) {
+            //CHANGE (getRoles)
+            if (person.getPersonrole().isEmpty()) {
                 PersonRole role = personRoleJpaRepository.findByName(roleName);
                 if (role != null) { // verify role
-                    person.getRoles().add(role);
+                    //CHANGE
+                    person.getPersonrole().add(role);
                 }
             }
         }
@@ -124,13 +129,15 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             PersonRole role = personRoleJpaRepository.findByName(roleName);
             if (role != null) { // verify role
                 boolean addRole = true;
-                for (PersonRole roleObj : person.getRoles()) {    // only add if user is missing role
+                //CHANGE
+                for (PersonRole roleObj : person.getPersonrole()) {    // only add if user is missing role
                     if (roleObj.getName().equals(roleName)) {
                         addRole = false;
                         break;
                     }
                 }
-                if (addRole) person.getRoles().add(role);   // everything is valid for adding role
+                //CHANGE
+                if (addRole) person.getPersonrole().add(role);   // everything is valid for adding role
             }
         }
     }
