@@ -38,11 +38,18 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         //CHANGE
         person.getPersonrole().forEach(role -> { //loop through roles
-            authorities.add(new SimpleGrantedAuthority(role.getEmail())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
+            //authorities.add(new SimpleGrantedAuthority(role.getEmail())); //create a SimpleGrantedAuthority by passed in role, adding it all to the authorities list, list of roles gets past in for spring security
+             if (role.getRole().equals("user")) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_USER")); 
+            }
+            if (role.getRole().equals("admin")) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); 
+            }
         });
         //debugging 
         //CHANGE
         System.out.println("roles: " + person.getPersonrole());
+        System.out.println("authorities: " + authorities); 
         // train spring security to User and Authorities
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), authorities);
     }
