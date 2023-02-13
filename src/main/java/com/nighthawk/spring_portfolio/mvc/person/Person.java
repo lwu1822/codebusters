@@ -121,6 +121,17 @@ public class Person {
         //this.score = score;
     }
 
+    //constructor for GET API endpoint
+    public Person(Long id, String email, String password, String name, Date dob) {
+        this.id = id; 
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.dob = dob;
+    }
+
+
+
     // A custom getter to return age from dob attribute
     public int getAge() {
         if (this.dob != null) {
@@ -129,10 +140,16 @@ public class Person {
         return -1;
     }
 
+    //toString because many to many roles may have messed things up (not sure)
+    public String toString() {
+        return ("Person(id=" + this.id + ", email=" + this.email + ", password=" + this.password + ", name=" + this.name
+                + ", dob=" + this.dob + ")");
+    }
+
     // Initialize static test data 
     // IMPORTANT: data here put in db (see ModelInit.java)
     public static Person[] init() {
-
+        
         // basics of class construction
         Person p1 = new Person();
         p1.setName("Thomas Edison");
