@@ -76,7 +76,7 @@ public class PersonApiController {
     }
 
     @GetMapping("/findEmail")
-    public String cookieTest(HttpServletRequest request) {
+    public ResponseEntity<String> cookieTest(HttpServletRequest request) {
         final Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
 
@@ -110,7 +110,9 @@ public class PersonApiController {
 			}
         }
 
-        return "{\"email\": " + username + "}"; 
+        username = "{\"email\": \"" + username + "\"}"; 
+
+        return new ResponseEntity<>(username, HttpStatus.OK);
 
     }
 
