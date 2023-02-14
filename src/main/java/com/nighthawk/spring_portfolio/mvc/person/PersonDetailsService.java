@@ -49,6 +49,7 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
         //debugging 
         //CHANGE
         System.out.println("roles: " + person.getPersonrole());
+        System.out.println("personAttributes: " + person.getName());
         System.out.println("authorities: " + authorities); 
         // train spring security to User and Authorities
         return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(), authorities);

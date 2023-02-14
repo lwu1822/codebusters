@@ -11,6 +11,14 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.nighthawk.spring_portfolio.mvc.jwt.JwtTokenUtil;
+
+
+import io.jsonwebtoken.ExpiredJwtException;
+
 @RestController
 @RequestMapping("/api/person")
 public class PersonApiController {
@@ -28,11 +36,15 @@ public class PersonApiController {
     @Autowired
     private PersonRoleJpaRepository roleRepository; 
 
+    @Autowired
+	private JwtTokenUtil jwtTokenUtil;
     /*
     GET List of People
      */
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPeople() {
+
+
             List<Person> users = repository.findAllByOrderByNameAsc(); 
 
             //for some reason returning ResponseEntity directly with repository.findAllByOrderByNameAsc does not return a complete
@@ -60,6 +72,45 @@ public class PersonApiController {
            
             //return response entity with Person objects in usersList
             return new ResponseEntity<>(usersList, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/findEmail")
+    public String cookieTest(HttpServletRequest request) {
+        final Cookie[] cookies = request.getCookies();
+        System.out.println(cookies);
+
+        String username = null;
+		String jwtToken = null;
+		// Try to get cookie with name jwt
+		if ((cookies == null) || (cookies.length == 0)) {
+			System.out.println("No cookies");
+		} else {
+			for (Cookie cookie: cookies) {
+				if (cookie.getName().equals("jwt")) {
+					jwtToken = cookie.getValue();
+                    System.out.println("JWTTOKEN: " + jwtToken);
+				}
+			}
+			if (jwtToken == null) {
+				System.out.println("No jwt cookie");
+			} else {
+				try {
+					// Get username from the token if jwt cookie exists
+					username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                    System.out.println(username);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Unable to get JWT Token");
+				} catch (ExpiredJwtException e) {
+					System.out.println("JWT Token has expired");
+				} catch (Exception e) {
+					System.out.println("An error occurred");
+				}
+                
+			}
+        }
+
+        return "{\"email\": " + username + "}"; 
 
     }
 
