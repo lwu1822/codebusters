@@ -36,8 +36,10 @@ public class PersonApiController {
     @Autowired
     private PersonRoleJpaRepository roleRepository; 
 
+    //note: if no do autowired, will return null
     @Autowired
 	private JwtTokenUtil jwtTokenUtil;
+
     /*
     GET List of People
      */
@@ -75,12 +77,13 @@ public class PersonApiController {
 
     }
 
+    //get info from cookie so that I can display info on frontend
     @GetMapping("/findEmail")
     public ResponseEntity<String> cookieTest(HttpServletRequest request) {
         final Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
 
-        String username = null;
+        String email = null;
 		String jwtToken = null;
 		// Try to get cookie with name jwt
 		if ((cookies == null) || (cookies.length == 0)) {
@@ -96,9 +99,8 @@ public class PersonApiController {
 				System.out.println("No jwt cookie");
 			} else {
 				try {
-					// Get username from the token if jwt cookie exists
-					username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                    System.out.println(username);
+					// Get email from the token if jwt cookie exists
+					email = jwtTokenUtil.getUsernameFromToken(jwtToken);
 				} catch (IllegalArgumentException e) {
 					System.out.println("Unable to get JWT Token");
 				} catch (ExpiredJwtException e) {
@@ -110,9 +112,21 @@ public class PersonApiController {
 			}
         }
 
-        username = "{\"email\": \"" + username + "\"}"; 
+        //find person object based on email extracted from cookie
+        Person person = repository.findByEmail(email); 
 
-        return new ResponseEntity<>(username, HttpStatus.OK);
+        System.out.println("Email: " + email); 
+        System.out.println("Person object: " + person); 
+
+        //no feature for change password yet
+        //no need String email becuase extract from cookie
+        String name = person.getName(); 
+        Date dob = person.getDob(); 
+
+
+        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": " + dob + "}"; 
+
+        return new ResponseEntity<>(finalJson, HttpStatus.OK);
 
     }
 
