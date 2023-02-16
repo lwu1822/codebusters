@@ -124,7 +124,7 @@ public class PersonApiController {
         Date dob = person.getDob(); 
 
 
-        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": " + dob + "}"; 
+        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": \"" + dob + "\"}"; 
 
         return new ResponseEntity<>(finalJson, HttpStatus.OK);
 
