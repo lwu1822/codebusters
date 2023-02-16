@@ -165,6 +165,7 @@ public class PersonApiController {
     /*
     DELETE individual Person using ID
      */
+    /* 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
@@ -175,6 +176,17 @@ public class PersonApiController {
         }
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    }
+    */
+
+    @DeleteMapping("/delete/{id}")
+    public void deletePerson(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            repository.deleteById(id);  // value from findByID
+        }
+        // Bad ID
     }
 
     /*
