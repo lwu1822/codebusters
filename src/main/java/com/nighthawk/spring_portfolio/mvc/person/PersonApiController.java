@@ -179,11 +179,22 @@ public class PersonApiController {
     }
     */
 
+    /* 
     @DeleteMapping("/delete/{id}")
     public void deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
             Person person = optional.get();  // value from findByID
+            repository.deleteById(id);  // value from findByID
+        }
+        // Bad ID
+    }
+    */
+
+    @GetMapping("/delete/{id}")
+    public void deletePerson(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
             repository.deleteById(id);  // value from findByID
         }
         // Bad ID

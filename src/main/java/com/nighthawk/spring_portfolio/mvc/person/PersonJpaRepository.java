@@ -33,4 +33,6 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
     /*
       https://www.baeldung.com/spring-data-jpa-query
     */
+
+    void deleteById(Long id);
 }
