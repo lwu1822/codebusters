@@ -11,6 +11,14 @@ import java.text.SimpleDateFormat;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.nighthawk.spring_portfolio.mvc.jwt.JwtTokenUtil;
+
+
+import io.jsonwebtoken.ExpiredJwtException;
+
 @RestController
 @RequestMapping("/api/person")
 public class PersonApiController {
@@ -28,19 +36,27 @@ public class PersonApiController {
     @Autowired
     private PersonRoleJpaRepository roleRepository; 
 
+    //note: if no do autowired, will return null
+    @Autowired
+	private JwtTokenUtil jwtTokenUtil;
+
     /*
     GET List of People
      */
     @GetMapping("/")
     public ResponseEntity<List<Person>> getPeople() {
+
+
             List<Person> users = repository.findAllByOrderByNameAsc(); 
+
+            System.out.println(users);
 
             //for some reason returning ResponseEntity directly with repository.findAllByOrderByNameAsc does not return a complete
             //Person object, therefore, need to create individual Person objects, add them in a list, and then return them in 
             //ResponseEntity
             List<Person> usersList = new ArrayList<Person>();
 
-            for (int i = 0; i < users.size() - 1; i++) {
+            for (int i = 0; i < users.size(); i++) {
                 //find all the attributes of Person object
                 Long id = users.get(i).getId(); 
                 String email = users.get(i).getEmail(); 
@@ -60,6 +76,59 @@ public class PersonApiController {
            
             //return response entity with Person objects in usersList
             return new ResponseEntity<>(usersList, HttpStatus.OK);
+
+    }
+
+    //get info from cookie so that I can display info on frontend
+    @GetMapping("/findEmail")
+    public ResponseEntity<String> cookieTest(HttpServletRequest request) {
+        final Cookie[] cookies = request.getCookies();
+        System.out.println(cookies);
+
+        String email = null;
+		String jwtToken = null;
+		// Try to get cookie with name jwt
+		if ((cookies == null) || (cookies.length == 0)) {
+			System.out.println("No cookies");
+		} else {
+			for (Cookie cookie: cookies) {
+				if (cookie.getName().equals("jwt")) {
+					jwtToken = cookie.getValue();
+                    System.out.println("JWTTOKEN: " + jwtToken);
+				}
+			}
+			if (jwtToken == null) {
+				System.out.println("No jwt cookie");
+			} else {
+				try {
+					// Get email from the token if jwt cookie exists
+					email = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Unable to get JWT Token");
+				} catch (ExpiredJwtException e) {
+					System.out.println("JWT Token has expired");
+				} catch (Exception e) {
+					System.out.println("An error occurred");
+				}
+                
+			}
+        }
+
+        //find person object based on email extracted from cookie
+        Person person = repository.findByEmail(email); 
+
+        System.out.println("Email: " + email); 
+        System.out.println("Person object: " + person); 
+
+        //no feature for change password yet
+        //no need String email becuase extract from cookie
+        String name = person.getName(); 
+        Date dob = person.getDob(); 
+
+
+        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": \"" + dob + "\"}"; 
+
+        return new ResponseEntity<>(finalJson, HttpStatus.OK);
 
     }
 
@@ -96,6 +165,7 @@ public class PersonApiController {
     /*
     DELETE individual Person using ID
      */
+    /* 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Person> deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
@@ -106,6 +176,17 @@ public class PersonApiController {
         }
         // Bad ID
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    }
+    */
+
+    @DeleteMapping("/delete/{id}")
+    public void deletePerson(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            repository.deleteById(id);  // value from findByID
+        }
+        // Bad ID
     }
 
     /*
