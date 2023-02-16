@@ -209,7 +209,7 @@ public class Person {
         p6.setEmail("a@gmail.com");
         p6.setPassword("a");
         try {
-            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("10-21-1959");
+            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("02-15-2023");
             p6.setDob(d);
         } catch (Exception e) {
         }

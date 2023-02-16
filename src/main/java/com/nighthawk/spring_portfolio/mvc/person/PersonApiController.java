@@ -49,12 +49,14 @@ public class PersonApiController {
 
             List<Person> users = repository.findAllByOrderByNameAsc(); 
 
+            System.out.println(users);
+
             //for some reason returning ResponseEntity directly with repository.findAllByOrderByNameAsc does not return a complete
             //Person object, therefore, need to create individual Person objects, add them in a list, and then return them in 
             //ResponseEntity
             List<Person> usersList = new ArrayList<Person>();
 
-            for (int i = 0; i < users.size() - 1; i++) {
+            for (int i = 0; i < users.size(); i++) {
                 //find all the attributes of Person object
                 Long id = users.get(i).getId(); 
                 String email = users.get(i).getEmail(); 
