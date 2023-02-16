@@ -17,41 +17,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 // import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/api/decrypt")
-public class DecryptorApiController {
+@RequestMapping("/api/vigenc")
+public class VigenereApiController {
     
-
-    /* 
-    @GetMapping("/{expression}")
-    public ResponseEntity<Calculator> getExpression(@PathVariable String expression) {
-        // IMPORTANT: optional allow input null/no null value
-        Calculator calculator_obj = new Calculator(expression); 
-        return new ResponseEntity<>(calculator_obj.toStringJson(), HttpStatus.OK);  // OK HTTP response: status code, headers, and body
-            
-    }
-*/
-   
-
-   /* 
-    @GetMapping("/{expression}")
-    public ResponseEntity<JsonNode> getIsLeapYear(@PathVariable String expression) throws JsonMappingException, JsonProcessingException {
-      // Backend Year Object
-      Calculator calculator_obj = new Calculator(expression);
-
-      
-      // Turn Year Object into JSON
-      ObjectMapper mapper = new ObjectMapper(); 
-      JsonNode json = mapper.readTree(calculator_obj.toStringJson()); // this requires exception handling
-
-      return ResponseEntity.ok(json);  // JSON response, see ExceptionHandlerAdvice for throws
-      
-    }
-    */
 
     @GetMapping("all/{text}")
     public ResponseEntity<JsonNode> decryptText(@PathVariable String text) throws JsonMappingException, JsonProcessingException {
 
-        Decryptor calculator_obj = new Decryptor(text);
+        VigenereEncrypt calculator_obj = new VigenereEncrypt();
       // Turn Decryptor object into JSON
       ObjectMapper mapper = new ObjectMapper(); 
       JsonNode json = mapper.readTree(calculator_obj.toStringJson());
