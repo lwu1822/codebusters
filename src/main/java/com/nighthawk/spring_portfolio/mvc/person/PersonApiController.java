@@ -124,9 +124,10 @@ public class PersonApiController {
         //no need String email becuase extract from cookie
         String name = person.getName(); 
         Date dob = person.getDob(); 
+        String id = String.valueOf(person.getId());
 
 
-        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": \"" + dob + "\"}"; 
+        String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": \"" + dob + "\",\"id\": \"" + id +"\"}"; 
 
         return new ResponseEntity<>(finalJson, HttpStatus.OK);
 
