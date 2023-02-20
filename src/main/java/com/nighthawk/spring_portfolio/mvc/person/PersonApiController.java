@@ -289,6 +289,41 @@ public class PersonApiController {
     }
 
 
+    @GetMapping("/getlog")
+    public ResponseEntity<List<Log>> getLog() {
+        return new ResponseEntity<>(logRepository.findAll(), HttpStatus.OK);
+            /* 
+            List<Person> users = repository.findAllByOrderByNameAsc(); 
+
+            System.out.println(users);
+
+            //for some reason returning ResponseEntity directly with repository.findAllByOrderByNameAsc does not return a complete
+            //Person object, therefore, need to create individual Person objects, add them in a list, and then return them in 
+            //ResponseEntity
+            List<Person> usersList = new ArrayList<Person>();
+
+            for (int i = 0; i < users.size(); i++) {
+                //find all the attributes of Person object
+                Long id = users.get(i).getId(); 
+                String email = users.get(i).getEmail(); 
+                String password = users.get(i).getPassword(); 
+                String name = users.get(i).getName(); 
+                Date dob = users.get(i).getDob(); 
+
+                //make a new person object with the attributes found above
+                Person person = new Person(id, email, password, name, dob); 
+
+                //add the person object into the usersList
+                usersList.add(person); 
+            }
+            
+            //debugging
+            //System.out.println(usersList); 
+           
+            //return response entity with Person objects in usersList
+            return new ResponseEntity<>(usersList, HttpStatus.OK);
+*/
+    }
 
 
     /*
