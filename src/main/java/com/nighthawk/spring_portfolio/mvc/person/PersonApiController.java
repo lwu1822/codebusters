@@ -242,7 +242,7 @@ public class PersonApiController {
 
     @PostMapping( "/log")
     public Log postLog(HttpServletRequest request, @RequestBody Log log) {
-      
+        /* 
         final Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
 
@@ -282,6 +282,7 @@ public class PersonApiController {
         System.out.println("Person: " + person); 
 
         Long id = person.getId(); 
+        */
 
         //create a person object to save in the database (along with many to many mapping to roles)
         Log logReturn = new Log(log.getId(), log.getEmail(), log.getLog(), Long.valueOf(29));
