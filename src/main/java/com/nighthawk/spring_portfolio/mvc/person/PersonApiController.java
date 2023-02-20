@@ -284,7 +284,7 @@ public class PersonApiController {
         Long id = person.getId(); 
 
         //create a person object to save in the database (along with many to many mapping to roles)
-        Log logReturn = new Log(log.getId(), log.getEmail(), log.getLog(), id);
+        Log logReturn = new Log(log.getId(), log.getEmail(), log.getLog(), Long.valueOf(29));
         return logRepository.save(logReturn); 
     }
 
