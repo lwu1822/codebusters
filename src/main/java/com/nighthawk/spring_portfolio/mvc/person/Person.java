@@ -95,9 +95,11 @@ public class Person {
     )
     private Set<PersonRole> personrole;
 
+    /* 
     @OneToMany(targetEntity = Log.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private List<Log> logs;
+    */
 
     //maybe other way around?
     /* 

@@ -36,7 +36,7 @@ public class Log {
     @NotEmpty
     private String log;
 
-
+    private Long userId;
 
     public Log(String email, String log) {
         this.email = email; 
