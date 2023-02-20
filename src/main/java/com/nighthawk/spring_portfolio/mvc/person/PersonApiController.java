@@ -241,12 +241,55 @@ public class PersonApiController {
     }
 
     @PostMapping( "/log")
-    public Log postLog(@RequestBody Log log) {
-       
+    public Log postLog(HttpServletRequest request, @RequestBody Log log) {
+      
+        final Cookie[] cookies = request.getCookies();
+        System.out.println(cookies);
+
+        String email = null;
+		String jwtToken = null;
+		// Try to get cookie with name jwt
+		if ((cookies == null) || (cookies.length == 0)) {
+			System.out.println("No cookies");
+		} else {
+			for (Cookie cookie: cookies) {
+				if (cookie.getName().equals("jwt")) {
+					jwtToken = cookie.getValue();
+                    System.out.println("JWTTOKEN: " + jwtToken);
+				}
+			}
+			if (jwtToken == null) {
+				System.out.println("No jwt cookie");
+			} else {
+				try {
+					// Get email from the token if jwt cookie exists
+					email = jwtTokenUtil.getUsernameFromToken(jwtToken);
+				} catch (IllegalArgumentException e) {
+					System.out.println("Unable to get JWT Token");
+				} catch (ExpiredJwtException e) {
+					System.out.println("JWT Token has expired");
+				} catch (Exception e) {
+					System.out.println("An error occurred");
+				}
+                
+			}
+        }
+
+        System.out.println("Email: " + email); 
+
+        Person person = repository.findByEmail(email); 
+
+        System.out.println("Person: " + person); 
+
+        Long id = person.getId(); 
+
         //create a person object to save in the database (along with many to many mapping to roles)
-        Log logReturn = new Log(log.getId(), log.getEmail(), log.getLog(), log.getUserId());
+        Log logReturn = new Log(log.getId(), log.getEmail(), log.getLog(), id);
         return logRepository.save(logReturn); 
     }
+
+
+
 
     /*
     The personSearch API looks across database for partial match to term (k,v) passed by RequestEntity body
