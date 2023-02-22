@@ -287,7 +287,9 @@ public class PersonApiController {
         }
 
         if (person.getPassword() != null) {
-            person2.setPassword(person.getPassword());
+            String password = person.getPassword(); 
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+            person2.setPassword(password);
         }
 
         if (person.getDob() != null) {
