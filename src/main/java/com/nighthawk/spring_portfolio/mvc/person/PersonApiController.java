@@ -247,6 +247,57 @@ public class PersonApiController {
         return logRepository.save(logReturn); 
     }
 
+    /* 
+    @PostMapping("/userupdate")
+    public Person updatePerson(@RequestBody Person person) {
+        Person person1 = repository.findByEmail(person.getEmail()); 
+        repository.deleteById(person1.getId());
+
+         
+        // Optional<Person> optional = repository.findById(person.getId());
+        // if (optional.isPresent()) {  // Good ID
+        //     repository.deleteById(person.getId());  // value from findByID
+        // }
+        
+        //encrypt password
+        String password = person.getPassword(); 
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        //create a person object to save in the database (along with many to many mapping to roles)
+        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonrole(), null);
+        return repository.save(personReturn); 
+        
+    }
+    */
+
+    @PostMapping("/userupdate")
+    public Person updatePerson(@RequestBody Person person) {
+        Optional<Person> person1 = repository.findById(person.getId()); 
+        //SO THIS IS THE PIECE OF CODE TO CHANGE TYPES!!!!!!
+        Person person2 = person1.orElse(null);
+
+        System.out.println("person2: " + person2); 
+     
+        
+        if (person.getEmail() != null) {
+            person2.setEmail(person.getEmail());
+        }
+
+        if (person.getName() != null) {
+            person2.setName(person.getName());
+        }
+
+        if (person.getPassword() != null) {
+            person2.setPassword(person.getPassword());
+        }
+
+        if (person.getDob() != null) {
+            person2.setDob(person.getDob());
+        }
+
+        return repository.save(person2); 
+        
+    }
+
 
     @GetMapping("/getlog")
     public ResponseEntity<List<Log>> getLog() {
