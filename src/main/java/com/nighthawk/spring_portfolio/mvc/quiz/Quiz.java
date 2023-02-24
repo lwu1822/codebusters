@@ -7,12 +7,9 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.annotations.TypeDef;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import com.vladmihalcea.hibernate.type.json.JsonType;
 
-import groovyjarjarpicocli.CommandLine.PropertiesDefaultProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
