@@ -42,4 +42,56 @@ public class Log {
         this.email = email; 
         this.log = log; 
     }
+
+    public String toString() {
+        return ("Log: (id=" + this.id + ", email=" + this.email + ", log=" + this.log + ")");
+    }
+
+    // Initialize static test data 
+    // IMPORTANT: data here put in db (see ModelInit.java)
+    public static Log[] init() {
+        
+        // basics of class construction
+        Log p1 = new Log();
+        p1.setEmail("toby@gmail.com");
+        p1.setLog("123Toby!");
+        
+
+        Log p2 = new Log();
+        p2.setEmail("lexb@gmail.com");
+        p2.setLog("123LexB!");
+        
+
+        Log p3 = new Log();
+        p3.setEmail("niko@gmail.com");
+        p3.setLog("123Niko!");
+        
+
+        Log p4 = new Log();
+        p4.setEmail("madam@gmail.com");
+        p4.setLog("123Madam!");
+        
+
+        Log p5 = new Log();
+        p5.setEmail("jm1021@gmail.com");
+        p5.setLog("123Qwerty!");
+        
+        
+
+        // Array definition and data initialization
+        Log logs[] = {p1, p2, p3, p4, p5};
+        return(logs);
+    }
+
+    public static void main(String[] args) {
+        // obtain Person from initializer
+        Log logs[] = init();
+
+        // iterate using "enhanced for loop"
+        for( Log log : logs) {
+            System.out.println(log); // print object
+        }
+    }
+
 }
+
