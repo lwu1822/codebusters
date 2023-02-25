@@ -16,7 +16,7 @@ import javax.validation.constraints.NotEmpty;
 @Table(name = "notes")
 public class Note {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotEmpty
