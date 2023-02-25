@@ -238,7 +238,7 @@ public class PersonApiController {
         String password = person.getPassword(); 
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         //create a person object to save in the database (along with many to many mapping to roles)
-        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonrole(), null);
+        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getLoginStatus(), person.getPersonrole(), null);
         return repository.save(personReturn); 
     }
 
@@ -298,6 +298,10 @@ public class PersonApiController {
             person2.setDob(person.getDob());
         }
 
+        if (person.getLoginStatus() != null) {
+            person2.setLoginStatus(person.getLoginStatus());
+        }
+
         return repository.save(person2); 
         
     }
@@ -339,18 +343,7 @@ public class PersonApiController {
 */
     }
 
-    @PostMapping( "/login")
-    public Login postLogin(@RequestBody Login login) {
-        //create a person object to save in the database (along with many to many mapping to roles)
-        Login loginReturn = new Login(login.getId(), login.getUserId(), login.getLoginStatus());
-        return loginRepository.save(loginReturn); 
-    }
-
-     @GetMapping("/getlogin")
-    public ResponseEntity<List<Login>> getLogin() {
-        return new ResponseEntity<>(loginRepository.findAll(), HttpStatus.OK);
-    }
-
+   
 
 
     /*

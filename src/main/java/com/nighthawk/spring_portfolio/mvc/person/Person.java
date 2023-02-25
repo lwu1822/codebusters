@@ -84,6 +84,8 @@ public class Person {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
+    private String loginStatus; 
+
     // To be implemented
     //@ManyToMany(fetch = EAGER)
 
