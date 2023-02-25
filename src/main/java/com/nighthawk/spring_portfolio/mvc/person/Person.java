@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import static javax.persistence.FetchType.EAGER;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -91,6 +94,12 @@ public class Person {
         inverseJoinColumns = @JoinColumn(name = "person_role_id", referencedColumnName = "id")
     )
     private Set<PersonRole> personrole;
+
+    /* 
+    @OneToMany(targetEntity = Log.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private List<Log> logs;
+    */
 
     //maybe other way around?
     /* 
