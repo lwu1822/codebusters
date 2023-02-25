@@ -133,12 +133,13 @@ public class Person {
     }
 
     //constructor for GET API endpoint
-    public Person(Long id, String email, String password, String name, Date dob) {
+    public Person(Long id, String email, String password, String name, Date dob, String loginStatus) {
         this.id = id; 
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.loginStatus = loginStatus; 
     }
 
 

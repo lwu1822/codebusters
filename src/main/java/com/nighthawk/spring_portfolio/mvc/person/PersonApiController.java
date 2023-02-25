@@ -65,9 +65,10 @@ public class PersonApiController {
                 String password = users.get(i).getPassword(); 
                 String name = users.get(i).getName(); 
                 Date dob = users.get(i).getDob(); 
+                String loginStatus = users.get(i).getLoginStatus();
 
                 //make a new person object with the attributes found above
-                Person person = new Person(id, email, password, name, dob); 
+                Person person = new Person(id, email, password, name, dob, loginStatus); 
 
                 //add the person object into the usersList
                 usersList.add(person); 
@@ -150,9 +151,10 @@ public class PersonApiController {
             String password = optional.get().getPassword(); 
             String name = optional.get().getName(); 
             Date dob = optional.get().getDob(); 
+            String loginStatus = optional.get().getLoginStatus();
 
             //make a new person object with the attributes found above
-            Person person = new Person(id, email, password, name, dob); 
+            Person person = new Person(id, email, password, name, dob, loginStatus); 
 
             //add the person object into the usersList
             //this doesn't work for some reason
