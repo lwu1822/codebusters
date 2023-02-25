@@ -1,16 +1,15 @@
 package com.nighthawk.spring_portfolio.mvc.note;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.nighthawk.spring_portfolio.mvc.person.Person;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+@Repository
+public interface NoteJpaRepository extends JpaRepository<NoteJpaRepository, Long> {
 
-public interface NoteJpaRepository extends JpaRepository<Note, Long> {
-    List<Person> findByPersonId(Long id);
+    Note save(Note note);
+    // any additional custom query methods can be added here
 
-    @Transactional
-    void deleteByPersonId(long id);
+    void setPerson(Person person);
 }
