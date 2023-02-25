@@ -245,7 +245,7 @@ public class PersonApiController {
     @PostMapping( "/log")
     public Log postLog(@RequestBody Log log) {
         //create a person object to save in the database (along with many to many mapping to roles)
-        Log logReturn = new Log(log.getId(), log.getEmail(), log.getPlaintext(), log.getCiphertext(), log.getUserId());
+        Log logReturn = new Log(log.getId(), log.getEmail(), log.getCipherType(), log.getPlaintext(), log.getCiphertext(), log.getUserId());
         return logRepository.save(logReturn); 
     }
 

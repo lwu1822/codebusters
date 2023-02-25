@@ -33,6 +33,8 @@ public class Log {
     @Column(unique=true)
     private String email;
 
+    private String cipherType;
+
     private String plaintext;
     
     private String ciphertext;
