@@ -33,18 +33,20 @@ public class Log {
     @Column(unique=true)
     private String email;
 
-    @NotEmpty
-    private String log;
+    private String plaintext;
+    
+    private String ciphertext;
 
     private Long userId;
 
-    public Log(String email, String log) {
+    public Log(String email, String plaintext, String ciphertext) {
         this.email = email; 
-        this.log = log; 
+        this.plaintext = plaintext; 
+        this.ciphertext = ciphertext; 
     }
 
     public String toString() {
-        return ("Log: (id=" + this.id + ", email=" + this.email + ", log=" + this.log + ")");
+        return ("Log: (id=" + this.id + ", email=" + this.email + ", plaintext=" + this.plaintext + ", ciphertext=" + this.ciphertext + ")");
     }
 
     // Initialize static test data 
@@ -54,27 +56,27 @@ public class Log {
         // basics of class construction
         Log p1 = new Log();
         p1.setEmail("toby@gmail.com");
-        p1.setLog("123Toby!");
+        p1.setPlaintext("123Toby!");
         
 
         Log p2 = new Log();
         p2.setEmail("lexb@gmail.com");
-        p2.setLog("123LexB!");
+        p2.setPlaintext("123LexB!");
         
 
         Log p3 = new Log();
         p3.setEmail("niko@gmail.com");
-        p3.setLog("123Niko!");
+        p3.setPlaintext("123Niko!");
         
 
         Log p4 = new Log();
         p4.setEmail("madam@gmail.com");
-        p4.setLog("123Madam!");
+        p4.setPlaintext("123Madam!");
         
 
         Log p5 = new Log();
         p5.setEmail("jm1021@gmail.com");
-        p5.setLog("123Qwerty!");
+        p5.setPlaintext("123Qwerty!");
         
         
 
