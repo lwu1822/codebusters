@@ -36,9 +36,6 @@ public class PersonApiController {
     @Autowired
     private LogJpaRepository logRepository; 
 
-    @Autowired
-    private PersonNoteJpaRepository noteRepository; 
-
     //note: if no do autowired, will return null
     @Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -240,9 +237,6 @@ public class PersonApiController {
         password = BCrypt.hashpw(password, BCrypt.gensalt());
         //create a person object to save in the database (along with many to many mapping to roles)
         Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonrole(), null);
-        return repository.save(personReturn); 
-        //create a person object to save in the database (along with many to many mapping to roles)
-        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonnote(), null);
         return repository.save(personReturn); 
     }
 
