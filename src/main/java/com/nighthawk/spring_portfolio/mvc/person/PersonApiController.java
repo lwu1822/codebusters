@@ -36,6 +36,8 @@ public class PersonApiController {
     @Autowired
     private LogJpaRepository logRepository; 
 
+    @Autowired
+    private LoginJpaRepository loginRepository; 
     //note: if no do autowired, will return null
     @Autowired
 	private JwtTokenUtil jwtTokenUtil;
@@ -336,6 +338,19 @@ public class PersonApiController {
             return new ResponseEntity<>(usersList, HttpStatus.OK);
 */
     }
+
+    @PostMapping( "/login")
+    public Login postLogin(@RequestBody Login login) {
+        //create a person object to save in the database (along with many to many mapping to roles)
+        Login loginReturn = new Login(login.getId(), login.getUserId(), login.getLoginStatus());
+        return loginRepository.save(loginReturn); 
+    }
+
+     @GetMapping("/getlogin")
+    public ResponseEntity<List<Login>> getLogin() {
+        return new ResponseEntity<>(loginRepository.findAll(), HttpStatus.OK);
+    }
+
 
 
     /*
