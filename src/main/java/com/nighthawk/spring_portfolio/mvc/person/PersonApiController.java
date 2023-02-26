@@ -236,6 +236,11 @@ public class PersonApiController {
     //this is the new endpoint for creating a user (uses many to many to connect to roles)
     @PostMapping( "/post")
     public Person postPerson(@RequestBody Person person) {
+        String email = person.getEmail();
+        Person personExist = repository.findByEmail(email);
+        if (personExist != null) {  // Good ID
+            return null;  // value from findByID
+        }
         //encrypt password
         String password = person.getPassword(); 
         password = BCrypt.hashpw(password, BCrypt.gensalt());

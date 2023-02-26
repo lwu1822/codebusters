@@ -24,6 +24,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import static javax.persistence.FetchType.EAGER;
 import javax.validation.constraints.Email;
