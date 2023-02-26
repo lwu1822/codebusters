@@ -341,7 +341,6 @@ public class PersonApiController {
      * //return response entity with Person objects in usersList
      * return new ResponseEntity<>(usersList, HttpStatus.OK);
      */
-    }
 
     /*
      * The personSearch API looks across database for partial match to term (k,v)
