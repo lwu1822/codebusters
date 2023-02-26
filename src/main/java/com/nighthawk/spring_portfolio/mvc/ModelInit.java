@@ -50,6 +50,7 @@ public class ModelInit {
                     Note n = new Note(person.getEmail(), text); // constructor uses new person as Many-to-One
                                                                 // association
                     noteRepo.save(n); // JPA Save
+                    // testing notes
                 }
             }
 
