@@ -6,44 +6,44 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
+@Data // Annotations to simplify writing code (ie constructors, setters)
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity // Annotation to simplify creating an entity, which is a lightweight persistence
+        // domain object. Typically, an entity represents a table in a relational
+        // database, and each entity instance corresponds to a row in that table.
 public class Trivia {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private Long id;
 
-    @Column(unique = true)
-    private String question;
+        @Column(unique = true)
+        private String trivia;
+        private int haha;
+        private int boohoo;
 
-    private String answer;
-
-    // starting quiz questions
-    public static Trivia[] init() {
-        final Trivia[] triviaArray = {
-                new Trivia(null, "What is the most commonly used letter in the English language?", "e"),
-                new Trivia(null,
-                        "What is the name of the famous code-breaking machine used by the Allies in World War II?",
-                        "enigma"),
-                new Trivia(null, "What is the term for a message that has been converted into a secret code?",
-                        "cipher"),
-                new Trivia(null, "What is the name of the cipher that involves shifting the letters of the alphabet?",
-                        "caesar"),
-                new Trivia(null, "What is the term for a code that is easily broken or understood?", "weak"),
-                new Trivia(null,
-                        "What is the term for a code that is difficult or impossible to break without the key?",
-                        "strong"),
-                new Trivia(null, "What is the name of the cipher that uses a grid to encrypt messages?", "polybius"),
-                new Trivia(null, "What is the name of the cipher that involves replacing each letter with a number?",
-                        "atbash"),
-                new Trivia(null, "What is the term for a code that involves using one word to represent another?",
-                        "code word"),
-                new Trivia(null,
-                        "What is the name of the cipher that involves using a keyword to create a unique encryption?",
-                        "vigenere")
-        };
-        return triviaArray;
-    }
+        // starting jokes
+        public static String[] init() {
+                final String[] triviaArray = {
+                                "If you give someone a program... you will frustrate them for a day; if you teach them how to program... you will frustrate them for a lifetime.",
+                                "Q: Why did I divide sin by tan? A: Just cos.",
+                                "UNIX is basically a simple operating system... but you have to be a genius to understand the simplicity.",
+                                "Enter any 11-digit prime number to continue.",
+                                "If at first you don't succeed; call it version 1.0.",
+                                "Java programmers are some of the most materialistic people I know, very object-oriented",
+                                "The oldest computer can be traced back to Adam and Eve. It was an apple but with extremely limited memory. Just 1 byte. And then everything crashed.",
+                                "Q: Why did Wi-Fi and the computer get married? A: Because they had a connection",
+                                "Bill Gates teaches a kindergarten class to count to ten. 1, 2, 3, 3.1, 95, 98, ME, 2000, XP, Vista, 7, 8, 10.",
+                                "Q: What’s a aliens favorite computer key? A: the space bar!",
+                                "There are 10 types of people in the world: those who understand binary, and those who don’t.",
+                                "If it wasn't for C, we’d all be programming in BASI and OBOL.",
+                                "Computers make very fast, very accurate mistakes.",
+                                "Q: Why is it that programmers always confuse Halloween with Christmas? A: Because 31 OCT = 25 DEC.",
+                                "Q: How many programmers does it take to change a light bulb? A: None. It’s a hardware problem.",
+                                "The programmer got stuck in the shower because the instructions on the shampoo bottle said: Lather, Rinse, Repeat.",
+                                "Q: What is the biggest lie in the entire universe? A: I have read and agree to the Terms and Conditions.",
+                                "An SQL statement walks into a bar and sees two tables. It approaches, and asks may I join you?"
+                };
+                return triviaArray;
+        }
 }
