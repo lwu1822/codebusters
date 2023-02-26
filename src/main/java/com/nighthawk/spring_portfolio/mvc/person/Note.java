@@ -41,10 +41,10 @@ public class Note {
     @JsonIgnore
     private Person person;
 
-    //public Note(String text, Person person) {
-      //  this.text = text;
-    //this.person = person;
-    //}
+    // public Note(String text, Person person) {
+    // this.text = text;
+    // this.person = person;
+    // }
 
     public Note(String email, String text) {
         this.email = email;
@@ -53,6 +53,42 @@ public class Note {
 
     public String toString() {
         return ("Note: (id=" + this.id + ", email=" + this.email + ", text=" + this.text + ")");
+    }
+
+    // Initialize static test data
+    // IMPORTANT: data here put in db (see ModelInit.java)
+    public static Note[] init() {
+
+        // basics of class construction
+        Note p1 = new Note();
+        p1.setEmail("toby@gmail.com");
+        p1.setText("Note by Toby");
+
+        Note p2 = new Note();
+        p2.setEmail("ana@gmail.com");
+        p2.setText("Notes from Ana");
+
+        Note p3 = new Note();
+        p2.setEmail("Sharon@gmail.com");
+        p2.setText("Notes from Sharon");
+
+        Note p4 = new Note();
+        p4.setEmail("Tom@gmail.com");
+        p4.setText("Notes from Tom");
+
+        // Array definition and data initialization
+        Note notes[] = { p1, p2, p3, p4 };
+        return (notes);
+    }
+
+    public static void main(String[] args) {
+        // obtain Person from initializer
+        Note notes[] = init();
+
+        // iterate using "enhanced for loop"
+        for (Note note : notes) {
+            System.out.println(note); // print object
+        }
     }
 
 }
