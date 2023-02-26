@@ -28,11 +28,11 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //change name to email because email is a unique identifier 
 
     @Column(unique=true)
     private Long userId;
 
+    //see if user is logged in/logged out
     @Column(unique=true)
     private String loginStatus;
 

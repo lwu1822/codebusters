@@ -168,6 +168,11 @@ public class PersonApiController {
     }
 
     /*
+     * 
+     * THE FOLLOWING ARE COMMENTED OUT BECAUSE THEY DON'T WORK ON FRONTEND (refer to deletePerson below for currently working solution)
+     */
+
+    /*
     DELETE individual Person using ID
      */
     /* 
@@ -196,20 +201,21 @@ public class PersonApiController {
     }
     */
 
+    //getmapping works
     @GetMapping("/delete/{id}")
     public void deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
             repository.deleteById(id);  // value from findByID
         }
-        // Bad ID
+        
     }
 
+    //CHANGED TO USING TEXT (JSON) TO CREATE A USER SO THAT THE PERSON'S ROLE CAN ALSO BE AN INPUT
     /*
     POST Aa record by Requesting Parameters from URI
      */
 
-    //CHANGED TO USING TEXT (JSON) TO CREATE A USER SO THAT THE PERSON'S ROLE CAN ALSO BE AN INPUT
     /* 
     @PostMapping( "/post")
     public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
@@ -236,10 +242,11 @@ public class PersonApiController {
     //this is the new endpoint for creating a user (uses many to many to connect to roles)
     @PostMapping( "/post")
     public Person postPerson(@RequestBody Person person) {
+        //check for duplicate email
         String email = person.getEmail();
         Person personExist = repository.findByEmail(email);
-        if (personExist != null) {  // Good ID
-            return null;  // value from findByID
+        if (personExist != null) {  
+            return null;
         }
         //encrypt password
         String password = person.getPassword(); 
@@ -251,11 +258,12 @@ public class PersonApiController {
 
     @PostMapping( "/log")
     public Log postLog(@RequestBody Log log) {
-        //create a person object to save in the database (along with many to many mapping to roles)
+        //create a new log cipher 
         Log logReturn = new Log(log.getId(), log.getEmail(), log.getCipherType(), log.getPlaintext(), log.getCiphertext(), log.getUserId());
         return logRepository.save(logReturn); 
     }
 
+    //old code that may still be used for reference
     /* 
     @PostMapping("/userupdate")
     public Person updatePerson(@RequestBody Person person) {
@@ -278,15 +286,18 @@ public class PersonApiController {
     }
     */
 
+    //update user info in "Settings" on frontend
     @PostMapping("/userupdate")
     public Person updatePerson(@RequestBody Person person) {
         Optional<Person> person1 = repository.findById(person.getId()); 
         //SO THIS IS THE PIECE OF CODE TO CHANGE TYPES!!!!!!
         Person person2 = person1.orElse(null);
 
+        //debugging
         System.out.println("person2: " + person2); 
      
         
+        //update user info only if info is provided
         if (person.getEmail() != null) {
             person2.setEmail(person.getEmail());
         }
@@ -317,6 +328,8 @@ public class PersonApiController {
     @GetMapping("/getlog")
     public ResponseEntity<List<Log>> getLog() {
         return new ResponseEntity<>(logRepository.findAll(), HttpStatus.OK);
+            //commented code was used for getting Person (for some reason repository.findAll returns wacky json)
+            //but i guess findAll works for Log
             /* 
             List<Person> users = repository.findAllByOrderByNameAsc(); 
 

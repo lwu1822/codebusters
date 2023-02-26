@@ -85,11 +85,13 @@ public class Person {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dob;
 
+    //loginStatus to check if user is logged in/logged out
     private String loginStatus; 
 
     // To be implemented
     //@ManyToMany(fetch = EAGER)
 
+    //personroles work in progress
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
         name = "person_person_roles",
