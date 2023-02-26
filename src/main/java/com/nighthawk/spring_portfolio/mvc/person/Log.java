@@ -33,6 +33,7 @@ public class Log {
     @Column(unique=true)
     private String email;
 
+    //some things to log on frontend (ex: type of cipher, what the encrypted/decrypted message was, and userID to identify who the log should be saved under)
     private String cipherType;
 
     private String plaintext;
