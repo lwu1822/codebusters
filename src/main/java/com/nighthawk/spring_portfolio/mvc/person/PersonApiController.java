@@ -15,6 +15,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.nighthawk.spring_portfolio.mvc.jwt.JwtTokenUtil;
+import com.nighthawk.spring_portfolio.mvc.notes.Note;
+import com.nighthawk.spring_portfolio.mvc.notes.NoteJpaRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -239,14 +241,16 @@ public class PersonApiController {
         return logRepository.save(logReturn);
     }
 
-    @PostMapping("/note")
-    public Note postNote(@RequestBody Note note) {
-        // create a person object to save in the database (along with many to many
-        // mapping to roles)
-
-        Note noteReturn = new Note(note.getId(), note.getEmail(), note.getText());
-        return noteRepository.save(noteReturn);
-    }
+    /*
+     * @PostMapping("/note")
+     * public Note postNote(@RequestBody Note note) {
+     * // create a person object to save in the database (along with many to many
+     * // mapping to roles)
+     * 
+     * Note noteReturn = new Note(note.getId(), note.getEmail(), note.getText());
+     * return noteRepository.save(noteReturn);
+     * }
+     */
 
     /*
      * @PostMapping("/userupdate")

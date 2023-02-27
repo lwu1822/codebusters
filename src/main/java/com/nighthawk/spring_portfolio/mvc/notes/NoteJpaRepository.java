@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.mvc.person;
+package com.nighthawk.spring_portfolio.mvc.notes;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
