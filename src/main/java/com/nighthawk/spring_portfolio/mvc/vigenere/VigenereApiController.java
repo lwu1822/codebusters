@@ -19,17 +19,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping("/api/vigenc")
 public class VigenereApiController {
-    
 
-    @GetMapping("all/{text}")
-    public ResponseEntity<JsonNode> decryptText(@PathVariable String text) throws JsonMappingException, JsonProcessingException {
+    @GetMapping("all/{text}/{key}")
+    public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String key) throws JsonMappingException, JsonProcessingException {
 
-        VigenereEncrypt calculator_obj = new VigenereEncrypt();
-      // Turn Decryptor object into JSON
-      ObjectMapper mapper = new ObjectMapper(); 
-      JsonNode json = mapper.readTree(calculator_obj.toStringJson());
+        VigenereEncrypt encryptor = new VigenereEncrypt(key);
+        String encryptedText = encryptor.encrypt(text);
 
-      return ResponseEntity.ok(json);
+        // Turn encrypted text into JSON
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode node = mapper.createObjectNode();
+        node.put("result", encryptedText);
+        JsonNode json = mapper.convertValue(node, JsonNode.class);
+
+        return ResponseEntity.ok(json);
     }
 
     // add other methods
