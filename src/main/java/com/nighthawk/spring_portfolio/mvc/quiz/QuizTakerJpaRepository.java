@@ -8,8 +8,7 @@ Extends the JpaRepository interface from Spring Data JPA.
 -- JpaRepository defines standard CRUD methods
 -- Via JPA the developer can retrieve database from relational databases to Java objects and vice versa.
  */
-public interface QuizJpaRepository extends JpaRepository<Quiz, Long> {
+public interface QuizTakerJpaRepository extends JpaRepository<QuizTaker, Long> {
 
-       Quiz findByQuizNumberAndQuestionNumber(Integer quizNumber,Integer questionNumber);
-    
+    QuizTaker  findByEmail(String email);
 }

@@ -1,5 +1,7 @@
 package com.nighthawk.spring_portfolio.mvc.quiz;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /*
@@ -8,8 +10,8 @@ Extends the JpaRepository interface from Spring Data JPA.
 -- JpaRepository defines standard CRUD methods
 -- Via JPA the developer can retrieve database from relational databases to Java objects and vice versa.
  */
-public interface QuizJpaRepository extends JpaRepository<Quiz, Long> {
+public interface QuizResultsJpaRepository extends JpaRepository<QuizResults, Long> {
 
-       Quiz findByQuizNumberAndQuestionNumber(Integer quizNumber,Integer questionNumber);
-    
+   QuizResults findByQuizTakerIdAndQuizNumber(Long quizTakerId, int quizNumber);
+   List<QuizResults> findByQuizNumber(int quizNumber);
 }

@@ -50,6 +50,8 @@ public class Quiz {
     @NonNull
     private String answer;
 
+    @NonNull
+    private String[] quizOptions;
 
     public Quiz(int id, @NotEmpty int quizNumber, @NotEmpty int questionNumber, @NonNull String question,
             @NonNull String answer) {
@@ -100,25 +102,17 @@ public class Quiz {
         this.answer = answer;
     }
 
+    public String[] getQuizOptions(){
+
+        return quizOptions;
+    }
+
+    public void setQuizOptions(String[] quizOptions){
+        this.quizOptions = quizOptions;
+    }
+
     public static void main(String[] args) {
-        //ConfigurableApplicationContext context = SpringApplication.run(Quiz.class,args);
-        // obtain Person from initializer
-       // Quiz persons[] = init();
-
-        // iterate using "enhanced for loop"
-       /* for( Person person : persons) {
-            System.out.println(person);  // print object
-        }*/ 
-        Quiz q1 = new Quiz();
-        q1.setQuizNumber(1);
-        q1.setQuestionNumber(1);
-        q1.setQuestion("What is your name?");
-        q1.setAnswer("Riya");
-
-        //System.out.println("hello");
-       // QuizJpaRepository quizRepository = context.getBean(QuizJpaRepository.class);
-        //quizRepository.save(q1);
-        //context.close();
+       
      }
     // Initialize static test data 
     // IMPORTANT: data here put in db (see ModelInit.java)
