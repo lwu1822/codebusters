@@ -31,7 +31,7 @@ public class Note {
     @Column(unique = true)
     private String email;
 
-    @NotNull
+    // @NotNull
     @Column(columnDefinition = "TEXT")
     private String text;
 
