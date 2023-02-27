@@ -29,7 +29,7 @@ public class NoteApiController {
         // create a person object to save in the database (along with many to many
         // mapping to roles)
 
-        Note noteReturn = new Note(note.getId(), note.getEmail(), note.getText());
+        Note noteReturn = new Note(note.getEmail(), note.getText());
         return noteRepository.save(noteReturn);
     }// test
 
