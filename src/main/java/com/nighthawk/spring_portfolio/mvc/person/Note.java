@@ -44,6 +44,7 @@ public class Note {
     // public Note(String text, Person person) {
     // this.text = text;
     // this.person = person;
+
     //
     // }
 
