@@ -35,11 +35,11 @@ public class Note {
     @Column(columnDefinition = "TEXT")
     private String text;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "tutorial_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Person person;
+    // @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    // @JoinColumn(name = "tutorial_id", nullable = false)
+    // @OnDelete(action = OnDeleteAction.CASCADE)
+    // @JsonIgnore
+    // private Person person;
 
     // public Note(String text, Person person) {
     // this.text = text;
