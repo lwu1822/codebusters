@@ -1,8 +1,13 @@
 package com.nighthawk.spring_portfolio.mvc.vigenere;
 
 public class VigenereEncrypt{
-    public static String encrypt(String text, final String key)
-    {
+    private final String key;
+
+    public VigenereEncrypt(String key) {
+        this.key = key.toUpperCase();
+    }
+
+    public String encrypt(String text) {
         String res = "";
         text = text.toUpperCase();
         for (int i = 0, j = 0; i < text.length(); i++)
@@ -15,13 +20,14 @@ public class VigenereEncrypt{
         }
         return res.toString();
     }
- 
+
     public String toStringJson() {
-        return "{ \"result\": \"" + encrypt(null, null) + "\" }";
+        return "{ \"result\": \"" + encrypt(null) + "\" }";
     }
  
     public static void main(String[] args)
     {
-        System.out.println("Encrypted Text: " + VigenereEncrypt.encrypt(null, null));
+        VigenereEncrypt encryptor = new VigenereEncrypt("KEY");
+        System.out.println("Encrypted Text: " + encryptor.encrypt("TEXT"));
     }
 }
