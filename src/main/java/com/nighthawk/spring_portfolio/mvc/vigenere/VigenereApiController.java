@@ -18,14 +18,21 @@ public class VigenereApiController {
     @GetMapping("all/{text}/{key}")
     public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String key) throws JsonMappingException, JsonProcessingException {
 
-        VigenereEncrypt encryptor = new VigenereEncrypt(key);
-        String encryptedText = encryptor.encrypt(text);
+        VigenereEncrypt encryptor = new VigenereEncrypt(text, key);
+        // String encryptedText = encryptor.encrypt(text);
+
+        // Decryptor calculator_obj = new Decryptor(text);
+        // // Turn Decryptor object into JSON
+        // ObjectMapper mapper = new ObjectMapper(); 
+        // JsonNode json = mapper.readTree(calculator_obj.toStringJson());
+  
+        // return ResponseEntity.ok(json);
 
         // Turn encrypted text into JSON
         ObjectMapper mapper = new ObjectMapper();
-        ObjectNode node = mapper.createObjectNode();
-        node.put("result", encryptedText);
-        JsonNode json = mapper.convertValue(node, JsonNode.class);
+        // ObjectNode node = mapper.createObjectNode();
+        // node.put("result", encryptedText);
+        JsonNode json = mapper.readTree(encryptor.toStringJson());
 
         return ResponseEntity.ok(json);
     }
