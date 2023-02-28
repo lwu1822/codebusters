@@ -153,9 +153,56 @@ public class PersonApiController {
         String name = person.getName();
         Date dob = person.getDob();
         String id = String.valueOf(person.getId());
+        
+
+
+        List<Personrole> userRoles = personroleRepository.findAllByOrderByEmailAsc();
+        System.out.println(userRoles);
+
+        List<Personrole> personrole =  new ArrayList<>();
+
+
+        
+        for (int i = 0; i < userRoles.size(); i++) {
+            if (userRoles.get(i).getEmail().equals(email)) {
+                System.out.println("EMAIL: " + email);
+                String role = userRoles.get(i).getRole(); 
+                personrole.add(new Personrole(email, role));
+            }
+        }
+        
+        System.out.println(personrole);
+
+        String personroleJson = "";
+
+        for (int i = 0; i < personrole.size() - 1; i++) {
+            System.out.println(personrole.get(i));
+            personroleJson += "{" + "\"email\": ";
+            personroleJson += "\"" + personrole.get(i).getEmail() + "\"";
+            personroleJson += ",";
+            personroleJson += "\"role\": ";
+            personroleJson += "\"" + personrole.get(i).getRole() + "\"";
+            personroleJson += "}";
+            personroleJson += ",";
+
+        }
+
+        personroleJson += "{" + "\"email\": ";
+        personroleJson += "\"" + personrole.get(personrole.size() - 1).getEmail() + "\"";
+        personroleJson += ",";
+        personroleJson += "\"role\": ";
+        personroleJson += "\"" + personrole.get(personrole.size() - 1).getRole() + "\"";
+        personroleJson += "}";
+
+
+
+        System.out.println("JSON: " + personroleJson);
+
+
+
 
         String finalJson = "{\"email\": \"" + email + "\",\"name\": \"" + name + "\",\"dob\": \"" + dob
-                + "\",\"id\": \"" + id + "\"}";
+                + "\",\"id\": \"" + id + "\",\"personrole\": [" + personroleJson + "]" + "}";
 
         return new ResponseEntity<>(finalJson, HttpStatus.OK);
 
