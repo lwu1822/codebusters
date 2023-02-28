@@ -42,6 +42,9 @@ public class PersonApiController {
 
     @Autowired
     private LoginJpaRepository loginRepository;
+
+    @Autowired
+    private PersonroleJpaRepository personroleRepository;
     // note: if no do autowired, will return null
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -55,6 +58,12 @@ public class PersonApiController {
         List<Person> users = repository.findAllByOrderByNameAsc();
 
         System.out.println(users);
+
+        List<Personrole> userRoles = personroleRepository.findAllByOrderByEmailAsc();
+        System.out.println(userRoles);
+        //System.out.println("ROLE: " + personroleRepository.findById(Long.valueOf(30)));
+
+       
 
         // for some reason returning ResponseEntity directly with
         // repository.findAllByOrderByNameAsc does not return a complete
@@ -70,8 +79,18 @@ public class PersonApiController {
             String password = users.get(i).getPassword();
             String name = users.get(i).getName();
             Date dob = users.get(i).getDob();
-            Set<PersonRole> personrole = users.get(i).getPersonrole();
+            Set<Personrole> personrole =  new HashSet<>();
             String loginStatus = users.get(i).getLoginStatus();
+
+             
+            for (int j = 0; j < userRoles.size(); j++) {
+                if (userRoles.get(j).getEmail().equals(email)) {
+                    System.out.println("EMAIL: " + email);
+                    String role = userRoles.get(j).getRole(); 
+                    personrole.add(new Personrole(email, role));
+                }
+            }
+            
 
             // make a new person object with the attributes found above
             Person person = new Person(id, email, password, name, dob, personrole, loginStatus);

@@ -44,7 +44,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
-import com.nighthawk.spring_portfolio.mvc.person.PersonRole;
+import com.nighthawk.spring_portfolio.mvc.person.Personrole;
 
 /*
 Person is a POJO, Plain Old Java Object.
@@ -100,7 +100,7 @@ public class Person {
         joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "person_role_id", referencedColumnName = "id")
     )
-    private Set<PersonRole> personrole;
+    private Set<Personrole> personrole;
 
     /* 
     @OneToMany(targetEntity = Log.class, cascade = CascadeType.ALL)
@@ -148,7 +148,7 @@ public class Person {
     }
 
     //constructor for GET API endpoint
-    public Person(Long id, String email, String password, String name, Date dob, Set<PersonRole> personrole, String loginStatus) {
+    public Person(Long id, String email, String password, String name, Date dob, Set<Personrole> personrole, String loginStatus) {
         this.id = id; 
         this.email = email;
         this.password = password;
@@ -242,10 +242,10 @@ public class Person {
             p6.setDob(d);
         } catch (Exception e) {
         }
-        Set<PersonRole> personroles = new HashSet<>();
+        Set<Personrole> personroles = new HashSet<>();
 
-        PersonRole role = new PersonRole("a@gmail.com", "user");
-        PersonRole role2 = new PersonRole("a@gmail.com", "admin");
+        Personrole role = new Personrole("a@gmail.com", "user");
+        Personrole role2 = new Personrole("a@gmail.com", "admin");
         personroles.add(role);
         personroles.add(role2);
         p6.setPersonrole(personroles);
