@@ -44,6 +44,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+import com.nighthawk.spring_portfolio.mvc.person.Personrole;
+
 /*
 Person is a POJO, Plain Old Java Object.
 First set of annotations add functionality to POJO
@@ -77,9 +79,9 @@ public class Person {
     @NotEmpty
     private String password;
 
+    //@Size(min = 2, max = 30, message = "Name (2 to 30 chars)")
     // @NonNull, etc placed in params of constructor: "@NonNull @Size(min = 2, max = 30, message = "Name (2 to 30 chars)") String name"
     @NonNull
-    @Size(min = 2, max = 30, message = "Name (2 to 30 chars)")
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -98,7 +100,7 @@ public class Person {
         joinColumns = @JoinColumn(name = "person_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "person_role_id", referencedColumnName = "id")
     )
-    private Set<PersonRole> personrole;
+    private Set<Personrole> personrole;
 
     /* 
     @OneToMany(targetEntity = Log.class, cascade = CascadeType.ALL)
@@ -142,6 +144,17 @@ public class Person {
         this.password = password;
         this.name = name;
         this.dob = dob;
+        this.loginStatus = loginStatus; 
+    }
+
+    //constructor for GET API endpoint
+    public Person(Long id, String email, String password, String name, Date dob, Set<Personrole> personrole, String loginStatus) {
+        this.id = id; 
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.dob = dob;
+        this.personrole = personrole; 
         this.loginStatus = loginStatus; 
     }
 
@@ -219,6 +232,7 @@ public class Person {
         }
 
 
+
         Person p6 = new Person();
         p6.setName("a a");
         p6.setEmail("a@gmail.com");
@@ -228,9 +242,32 @@ public class Person {
             p6.setDob(d);
         } catch (Exception e) {
         }
+        Set<Personrole> personroles = new HashSet<>();
+
+        Personrole role = new Personrole("a@gmail.com", "user");
+        Personrole role2 = new Personrole("a@gmail.com", "admin");
+        personroles.add(role);
+        personroles.add(role2);
+        p6.setPersonrole(personroles);
+
+
+        Person p7 = new Person();
+        p7.setName("anonymous anonymous");
+        p7.setEmail("anon@gmail.com");
+        p7.setPassword("a");
+        try {
+            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("02-15-2023");
+            p7.setDob(d);
+        } catch (Exception e) {
+        }
+        Set<Personrole> personroles2 = new HashSet<>();
+
+        Personrole role3 = new Personrole("anon@gmail.com", "anonymous");
+        personroles2.add(role3);
+        p7.setPersonrole(personroles2);
 
         // Array definition and data initialization
-        Person persons[] = {p1, p2, p3, p4, p5, p6};
+        Person persons[] = {p1, p2, p3, p4, p5, p6, p7};
         return(persons);
     }
 

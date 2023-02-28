@@ -20,7 +20,7 @@ import java.util.HashSet;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class PersonRole {
+public class Personrole {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -37,7 +37,7 @@ public class PersonRole {
     private Set<Person> person; 
 
 
-    public PersonRole(String email, String role) {
+    public Personrole(String email, String role) {
         this.email = email; 
         this.role = role; 
     }

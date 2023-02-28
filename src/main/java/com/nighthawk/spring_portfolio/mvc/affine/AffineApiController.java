@@ -1,4 +1,4 @@
-package com.nighthawk.spring_portfolio.mvc.vigenere;
+package com.nighthawk.spring_portfolio.mvc.affine;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/vigenc")
-public class VigenereApiController {
+@RequestMapping("/api/affc")
+public class AffineApiController {
 
-    @GetMapping("all/{text}/{key}")
-    public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String key) throws JsonMappingException, JsonProcessingException {
+    @GetMapping("all/{text}/{keyA}/{keyB}")
+    public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String keyA, @PathVariable String keyB) throws JsonMappingException, JsonProcessingException {
 
-        VigenereEncrypt encryptor = new VigenereEncrypt(text, key);
+        AffineEncrypt encryptor = new AffineEncrypt(text, keyA, keyB);
         // String encryptedText = encryptor.encrypt(text);
 
         // Decryptor calculator_obj = new Decryptor(text);
