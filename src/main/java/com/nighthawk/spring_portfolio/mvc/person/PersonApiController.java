@@ -172,7 +172,47 @@ public class PersonApiController {
 
     }
 
-    // getmapping works
+
+    //NOTE NOTE NOTE NOTE NOTE
+    //PLEASE DO NOT DELETE THE COMMENTED CODE (AND ANY SUBSEQUENT COMMENTED CODE), 
+    //THEY ARE FOR REFERENCE AND ARE STILL NEEDED
+    //THANKS!!!!! :)
+    /*
+     * 
+     * THE FOLLOWING ARE COMMENTED OUT BECAUSE THEY DON'T WORK ON FRONTEND (refer to deletePerson below for currently working solution)
+     */
+
+    /*
+    DELETE individual Person using ID
+     */
+    /* 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Person> deletePerson(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            repository.deleteById(id);  // value from findByID
+            return new ResponseEntity<>(person, HttpStatus.OK);  // OK HTTP response: status code, headers, and body
+        }
+        // Bad ID
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+    }
+    */
+
+    /* 
+    @DeleteMapping("/delete/{id}")
+    public void deletePerson(@PathVariable long id) {
+        Optional<Person> optional = repository.findById(id);
+        if (optional.isPresent()) {  // Good ID
+            Person person = optional.get();  // value from findByID
+            repository.deleteById(id);  // value from findByID
+        }
+        // Bad ID
+    }
+    */
+
+
+    //getmapping works
     @GetMapping("/delete/{id}")
     public void deletePerson(@PathVariable long id) {
         Optional<Person> optional = repository.findById(id);
@@ -252,110 +292,108 @@ public class PersonApiController {
      * }
      */
 
-    /*
-     * @PostMapping("/userupdate")
-     * public Person updatePerson(@RequestBody Person person) {
-     * Person person1 = repository.findByEmail(person.getEmail());
-     * repository.deleteById(person1.getId());
-     * 
-     * 
-     * // Optional<Person> optional = repository.findById(person.getId());
-     * // if (optional.isPresent()) { // Good ID
-     * // repository.deleteById(person.getId()); // value from findByID
-     * // }
-     * 
-     * //encrypt password
-     * String password = person.getPassword();
-     * password = BCrypt.hashpw(password, BCrypt.gensalt());
-     * //create a person object to save in the database (along with many to many
-     * mapping to roles)
-     * Person personReturn = new Person(person.getId(), person.getEmail(), password,
-     * person.getName(), person.getDob(), person.getPersonrole(), null);
-     * return repository.save(personReturn);
-     * 
-     * }
-     * 
-     * //update user info in "Settings" on frontend
-     * 
-     * @PostMapping("/userupdate")
-     * public Person updatePerson(@RequestBody Person person) {
-     * Optional<Person> person1 = repository.findById(person.getId());
-     * // SO THIS IS THE PIECE OF CODE TO CHANGE TYPES!!!!!!
-     * Person person2 = person1.orElse(null);
-     * 
-     * System.out.println("person2: " + person2);
-     * 
-     * 
-     * if (person.getEmail() != null) {
-     * person2.setEmail(person.getEmail());
-     * }
-     * 
-     * if (person.getName() != null) {
-     * person2.setName(person.getName());
-     * }
-     * 
-     * if (person.getPassword() != null) {
-     * String password = person.getPassword();
-     * password = BCrypt.hashpw(password, BCrypt.gensalt());
-     * person2.setPassword(password);
-     * }
-     * 
-     * if (person.getDob() != null) {
-     * person2.setDob(person.getDob());
-     * }
-     * 
-     * if (person.getLoginStatus() != null) {
-     * person2.setLoginStatus(person.getLoginStatus());
-     * }
-     * 
-     * return repository.save(person2);
-     * 
-     * }
-     * 
-     * @GetMapping("/getnote")
-     * public ResponseEntity<List<Note>> getNote() {
-     * return new ResponseEntity<>(noteRepository.findAll(), HttpStatus.OK);
-     * 
-     * }
-     * 
-     * @GetMapping("/getlog")
-     * public ResponseEntity<List<Log>> getLog() {
-     * return new ResponseEntity<>(logRepository.findAll(), HttpStatus.OK);
-     * /*
-     * List<Person> users = repository.findAllByOrderByNameAsc();
-     * 
-     * System.out.println(users);
-     * 
-     * //for some reason returning ResponseEntity directly with
-     * repository.findAllByOrderByNameAsc does not return a complete
-     * //Person object, therefore, need to create individual Person objects, add
-     * them in a list, and then return them in
-     * //ResponseEntity
-     * List<Person> usersList = new ArrayList<Person>();
-     * 
-     * for (int i = 0; i < users.size(); i++) {
-     * //find all the attributes of Person object
-     * Long id = users.get(i).getId();
-     * String email = users.get(i).getEmail();
-     * String password = users.get(i).getPassword();
-     * String name = users.get(i).getName();
-     * Date dob = users.get(i).getDob();
-     * 
-     * //make a new person object with the attributes found above
-     * Person person = new Person(id, email, password, name, dob);
-     * 
-     * //add the person object into the usersList
-     * usersList.add(person);
-     * }
-     * 
-     * //debugging
-     * //System.out.println(usersList);
-     * 
-     * //return response entity with Person objects in usersList
-     * return new ResponseEntity<>(usersList, HttpStatus.OK);
-     */
+   //old code that may still be used for reference
+    /* 
+    @PostMapping("/userupdate")
+    public Person updatePerson(@RequestBody Person person) {
+        Person person1 = repository.findByEmail(person.getEmail()); 
+        repository.deleteById(person1.getId());
+         
+        // Optional<Person> optional = repository.findById(person.getId());
+        // if (optional.isPresent()) {  // Good ID
+        //     repository.deleteById(person.getId());  // value from findByID
+        // }
+        
+        //encrypt password
+        String password = person.getPassword(); 
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        //create a person object to save in the database (along with many to many mapping to roles)
+        Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(), person.getPersonrole(), null);
+        return repository.save(personReturn); 
+        
+    }
+    */
+    
+    //update user info in "Settings" on frontend
+    @PostMapping("/userupdate")
+    public Person updatePerson(@RequestBody Person person) {
+        Optional<Person> person1 = repository.findById(person.getId()); 
+        //SO THIS IS THE PIECE OF CODE TO CHANGE TYPES!!!!!!
+        Person person2 = person1.orElse(null);
 
-    /*
+        //debugging
+        System.out.println("person2: " + person2); 
+     
+        
+        //update user info only if info is provided
+        if (person.getEmail() != null) {
+            person2.setEmail(person.getEmail());
+        }
+
+        if (person.getName() != null) {
+            person2.setName(person.getName());
+        }
+
+        if (person.getPassword() != null) {
+            String password = person.getPassword(); 
+            password = BCrypt.hashpw(password, BCrypt.gensalt());
+            person2.setPassword(password);
+        }
+
+        if (person.getDob() != null) {
+            person2.setDob(person.getDob());
+        }
+
+        if (person.getLoginStatus() != null) {
+            person2.setLoginStatus(person.getLoginStatus());
+        }
+
+        return repository.save(person2); 
+    }
+    
+    /* 
+    @GetMapping("/getnote")
+    public ResponseEntity<List<Note>> getNote() {
+    return new ResponseEntity<>(noteRepository.findAll(), HttpStatus.OK);
+    
+    }
+    */
+    
+   @GetMapping("/getlog")
+    public ResponseEntity<List<Log>> getLog() {
+        return new ResponseEntity<>(logRepository.findAll(), HttpStatus.OK);
+            //commented code was used for getting Person (for some reason repository.findAll returns wacky json)
+            //but i guess findAll works for Log
+            /* 
+            List<Person> users = repository.findAllByOrderByNameAsc(); 
+            System.out.println(users);
+            //for some reason returning ResponseEntity directly with repository.findAllByOrderByNameAsc does not return a complete
+            //Person object, therefore, need to create individual Person objects, add them in a list, and then return them in 
+            //ResponseEntity
+            List<Person> usersList = new ArrayList<Person>();
+            for (int i = 0; i < users.size(); i++) {
+                //find all the attributes of Person object
+                Long id = users.get(i).getId(); 
+                String email = users.get(i).getEmail(); 
+                String password = users.get(i).getPassword(); 
+                String name = users.get(i).getName(); 
+                Date dob = users.get(i).getDob(); 
+                //make a new person object with the attributes found above
+                Person person = new Person(id, email, password, name, dob); 
+                //add the person object into the usersList
+                usersList.add(person); 
+            }
+            
+            //debugging
+            //System.out.println(usersList); 
+           
+            //return response entity with Person objects in usersList
+            return new ResponseEntity<>(usersList, HttpStatus.OK);
+*/
+    } 
+
+
+    /* 
      * The personSearch API looks across database for partial match to term (k,v)
      * passed by RequestEntity body
      */
