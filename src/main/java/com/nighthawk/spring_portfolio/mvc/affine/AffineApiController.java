@@ -1,10 +1,9 @@
-package com.nighthawk.spring_portfolio.mvc.substitution;
+package com.nighthawk.spring_portfolio.mvc.affine;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/substitution")
-public class SubstitutionApiController {
+@RequestMapping("/api/affc")
+public class AffineApiController {
 
     @GetMapping("all/{text}/{key}")
     public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String key) throws JsonMappingException, JsonProcessingException {
 
-        SubstitutionEncrypt encryptor = new SubstitutionEncrypt(text, key);
+        AffineEncrypt encryptor = new AffineEncrypt(text, key);
         // String encryptedText = encryptor.encrypt(text);
 
         // Decryptor calculator_obj = new Decryptor(text);

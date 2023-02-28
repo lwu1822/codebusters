@@ -1,10 +1,10 @@
-package com.nighthawk.spring_portfolio.mvc.substitution;
+package com.nighthawk.spring_portfolio.mvc.affine;
 
-public class SubstitutionEncrypt {
+public class AffineEncrypt {
     private final String key;
     private final String text;
 
-    public SubstitutionEncrypt(String text, String key) {
+    public AffineEncrypt(String text, String key) {
         this.key = key.toUpperCase();
         this.text = text.toUpperCase();
     }
@@ -31,7 +31,7 @@ public class SubstitutionEncrypt {
     // Tester method
     public static void main(String[] args) {
         // Random set of test cases
-        SubstitutionEncrypt encryptor = new SubstitutionEncrypt("KEY", "TEXT");
+        AffineEncrypt encryptor = new AffineEncrypt("KEY", "TEXT");
         System.out.println("Encrypted Text: " + encryptor.encrypt());
     }
 }
