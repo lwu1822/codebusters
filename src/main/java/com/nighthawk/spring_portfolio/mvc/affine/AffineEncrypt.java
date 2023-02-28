@@ -1,27 +1,25 @@
 package com.nighthawk.spring_portfolio.mvc.affine;
 
 public class AffineEncrypt {
-    private final String key;
-    private final String text;
+    private static String keyA;
+    private static String keyB;
+    private static String text;
 
-    public AffineEncrypt(String text, String key) {
-        this.key = key.toUpperCase();
-        this.text = text.toUpperCase();
+    public AffineEncrypt(String text, String keyA, String keyB) {
+        AffineEncrypt.text = text.toUpperCase();
+        AffineEncrypt.keyA = keyA.toUpperCase();
+        AffineEncrypt.keyB = keyB.toUpperCase();
     }
 
     public String encrypt() {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0, j = 0; i < text.length(); i++) {
-            char c = text.charAt(i);
-            if (c < 'A' || c > 'Z') {
-                result.append(c);
-                continue;
-            }
-            int keyChar = key.charAt(j) - 'A';
-            result.append((char) ((c + keyChar) % 26 + 'A'));
-            j = (j + 1) % key.length();
+        int a = Integer.parseInt(keyA);
+        int b = Integer.parseInt(keyB);
+        String CTxt = "";
+        for (int i = 0; i < text.length(); i++)
+        {
+            CTxt = CTxt + (char) ((((a * text.charAt(i)) + b) % 26) + 65);
         }
-        return result.toString();
+        return CTxt.toString();
     }
 
     public String toStringJson() {
@@ -31,7 +29,7 @@ public class AffineEncrypt {
     // Tester method
     public static void main(String[] args) {
         // Random set of test cases
-        AffineEncrypt encryptor = new AffineEncrypt("KEY", "TEXT");
+        AffineEncrypt encryptor = new AffineEncrypt("codecodecode", "3", "7");
         System.out.println("Encrypted Text: " + encryptor.encrypt());
     }
 }

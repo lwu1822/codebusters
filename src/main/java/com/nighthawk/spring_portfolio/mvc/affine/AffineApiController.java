@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/affc")
 public class AffineApiController {
 
-    @GetMapping("all/{text}/{key}")
-    public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String key) throws JsonMappingException, JsonProcessingException {
+    @GetMapping("all/{text}/{keyA}/{keyB}")
+    public ResponseEntity<JsonNode> encryptText(@PathVariable String text, @PathVariable String keyA, @PathVariable String keyB) throws JsonMappingException, JsonProcessingException {
 
-        AffineEncrypt encryptor = new AffineEncrypt(text, key);
+        AffineEncrypt encryptor = new AffineEncrypt(text, keyA, keyB);
         // String encryptedText = encryptor.encrypt(text);
 
         // Decryptor calculator_obj = new Decryptor(text);
