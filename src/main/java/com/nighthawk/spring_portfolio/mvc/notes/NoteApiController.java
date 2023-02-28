@@ -35,6 +35,16 @@ public class NoteApiController {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @GetMapping("/getnote")
+    public ResponseEntity<Note> getNote(@PathVariable String email) {
+        // find note object based on email extracted from cookie
+        Note note = noteRepository.findByEmail(email);
+
+        System.out.println("Email: " + email);
+        System.out.println("Person object: " + note);
+        return new ResponseEntity<>(note, HttpStatus.OK);
+    }
+
     // get info from cookie so that I can display info on frontend
     @GetMapping("/findEmail")
     public ResponseEntity<String> cookieTest(HttpServletRequest request) {
