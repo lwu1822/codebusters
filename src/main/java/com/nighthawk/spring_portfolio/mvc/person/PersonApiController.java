@@ -260,8 +260,16 @@ public class PersonApiController {
 
     // this is the new endpoint for creating a user (uses many to many to connect to
     // roles)
-    @PostMapping("/post")
-    public Person postPerson(@RequestBody Person person) {
+
+    @PostMapping(value = "/post", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> postPerson(@RequestBody final Person person) {
+        if (person.getName().length() <= 2) {
+            //System.out.println("hi");
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+
+        }
+
+        
         // encrypt password
         String password = person.getPassword();
         password = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -269,8 +277,45 @@ public class PersonApiController {
         // mapping to roles)
         Person personReturn = new Person(person.getId(), person.getEmail(), password, person.getName(), person.getDob(),
                 person.getLoginStatus(), person.getPersonrole(), null);
-        return repository.save(personReturn);
+        repository.save(personReturn);
+        return new ResponseEntity<>(personReturn, HttpStatus.OK);
+        
     }
+
+
+    /* 
+    @PostMapping(value = "/setStats2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Person> personStats2(@RequestBody final Map<String, Object> stat_map) {
+        // find ID
+        
+        long id = Long.parseLong((String) stat_map.get("id"));
+        Optional<Person> optional = repository.findById((id));
+        if (optional.isPresent()) { // Good ID
+            Person person = optional.get(); // value from findByID
+
+            // Extract Attributes from JSON
+            Map<String, Object> attributeMap = new HashMap<>();
+            for (Map.Entry<String, Object> entry : stat_map.entrySet()) {
+                // Add all attribute other thaN "date" to the "attribute_map"
+                if (!entry.getKey().equals("date") && !entry.getKey().equals("id"))
+                    attributeMap.put(entry.getKey(), entry.getValue());
+            }
+
+            // Set Date and Attributes to SQL HashMap
+            Map<String, Map<String, Object>> date_map = new HashMap<>();
+            date_map.put((String) stat_map.get("date"), attributeMap);
+            person.setStats(date_map); // BUG, needs to be customized to replace if existing or append if new
+            repository.save(person); // conclude by writing the stats updates
+
+            // return Person with update Stats
+            return new ResponseEntity<>(person, HttpStatus.OK);
+        }
+        
+        // return Bad ID
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    */
+    
 
     @PostMapping("/log")
     public Log postLog(@RequestBody Log log) {
