@@ -70,10 +70,11 @@ public class PersonApiController {
             String password = users.get(i).getPassword();
             String name = users.get(i).getName();
             Date dob = users.get(i).getDob();
+            Set<PersonRole> personrole = users.get(i).getPersonrole();
             String loginStatus = users.get(i).getLoginStatus();
 
             // make a new person object with the attributes found above
-            Person person = new Person(id, email, password, name, dob, loginStatus);
+            Person person = new Person(id, email, password, name, dob, personrole, loginStatus);
 
             // add the person object into the usersList
             usersList.add(person);

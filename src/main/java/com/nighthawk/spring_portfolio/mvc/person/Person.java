@@ -44,6 +44,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+import com.nighthawk.spring_portfolio.mvc.person.PersonRole;
+
 /*
 Person is a POJO, Plain Old Java Object.
 First set of annotations add functionality to POJO
@@ -145,6 +147,17 @@ public class Person {
         this.loginStatus = loginStatus; 
     }
 
+    //constructor for GET API endpoint
+    public Person(Long id, String email, String password, String name, Date dob, Set<PersonRole> personrole, String loginStatus) {
+        this.id = id; 
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.dob = dob;
+        this.personrole = personrole; 
+        this.loginStatus = loginStatus; 
+    }
+
 
 
     // A custom getter to return age from dob attribute
@@ -219,6 +232,7 @@ public class Person {
         }
 
 
+
         Person p6 = new Person();
         p6.setName("a a");
         p6.setEmail("a@gmail.com");
@@ -228,6 +242,13 @@ public class Person {
             p6.setDob(d);
         } catch (Exception e) {
         }
+        Set<PersonRole> personroles = new HashSet<>();
+
+        PersonRole role = new PersonRole("a@gmail.com", "user");
+        PersonRole role2 = new PersonRole("a@gmail.com", "admin");
+        personroles.add(role);
+        personroles.add(role2);
+        p6.setPersonrole(personroles);
 
         // Array definition and data initialization
         Person persons[] = {p1, p2, p3, p4, p5, p6};
