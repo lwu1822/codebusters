@@ -12,6 +12,7 @@ public class AffineEncrypt {
     }
 
     public String encrypt() {
+        StringBuilder result = new StringBuilder();
         int a = Integer.parseInt(keyA);
         int b = Integer.parseInt(keyB);
         String CTxt = "";
@@ -19,7 +20,8 @@ public class AffineEncrypt {
         {
             CTxt = CTxt + (char) ((((a * text.charAt(i)) + b) % 26) + 65);
         }
-        return CTxt.toString();
+        result.append((String) (CTxt));
+        return result.toString();
     }
 
     public String toStringJson() {
