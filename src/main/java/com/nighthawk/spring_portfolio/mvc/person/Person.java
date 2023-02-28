@@ -250,8 +250,24 @@ public class Person {
         personroles.add(role2);
         p6.setPersonrole(personroles);
 
+
+        Person p7 = new Person();
+        p7.setName("anonymous anonymous");
+        p7.setEmail("anon@gmail.com");
+        p7.setPassword("a");
+        try {
+            Date d = new SimpleDateFormat("MM-dd-yyyy").parse("02-15-2023");
+            p7.setDob(d);
+        } catch (Exception e) {
+        }
+        Set<Personrole> personroles2 = new HashSet<>();
+
+        Personrole role3 = new Personrole("anon@gmail.com", "anonymous");
+        personroles2.add(role3);
+        p7.setPersonrole(personroles2);
+
         // Array definition and data initialization
-        Person persons[] = {p1, p2, p3, p4, p5, p6};
+        Person persons[] = {p1, p2, p3, p4, p5, p6, p7};
         return(persons);
     }
 

@@ -45,6 +45,9 @@ public class PersonDetailsService implements UserDetailsService {  // "implement
             if (role.getRole().equals("admin")) {
                 authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); 
             }
+            if (role.getRole().equals("anonymous")) {
+                authorities.add(new SimpleGrantedAuthority("ROLE_ANON"));
+            }
         });
         //debugging 
         //CHANGE
